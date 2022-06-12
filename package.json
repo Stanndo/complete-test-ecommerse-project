@@ -1,0 +1,27 @@
+{
+  "name": "complete-web-dev-ecommerse-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stanndo/complete-test-ecommerse-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stanndo/complete-test-ecommerse-project/issues"
+  },
+  "homepage": "https://github.com/Stanndo/complete-test-ecommerse-project#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
