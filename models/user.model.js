@@ -1,5 +1,6 @@
 // third packajes
 const bcrypt = require("bcryptjs");
+const mongodb = require('mongodb');
 
 // own packages
 const db = require("../data/database");
@@ -14,6 +15,13 @@ class User {
       postalCode: postal,
       city: city,
     };
+  }
+
+  // finding user by id and this will get us some raw user data not an instance of the class
+  static findById(userId) {
+    const uid = new mongodb.ObjectId(userId);
+
+    return db.getDb().collection('users').findOne({ _id: uid }, { projection: { password: 0 } });
   }
 
   getUserWithSameEmail() {

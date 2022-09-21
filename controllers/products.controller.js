@@ -11,6 +11,7 @@ async function getAllProducts(req, res, next) {
 };
 
 async function getProductDetails(req, res, next) {
+    
     try {
         const product = await Product.findProductById(req.params.id);
         res.render('client/products/product-details', { product: product });

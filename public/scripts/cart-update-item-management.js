@@ -1,6 +1,6 @@
 const cartItemUpdateFormElements = document.querySelectorAll('.cart-item-management');
 const cartTotalPriceElement = document.getElementById("cart-total-price");
-const cartBadgeElement = document.querySelector(".nav-items .badge");
+const cartBadgeElements = document.querySelectorAll(".nav-items .badge");
 
 async function updateCartItem(event) {
     event.preventDefault();
@@ -13,16 +13,16 @@ async function updateCartItem(event) {
     let response;
     try {
         response = await fetch("/cart/items", {
-            method: "PATCH",
+            method: 'PATCH',
             body: JSON.stringify({
                 productId: productId,
                 quantity: quantity,
-                _csrf: csrfToken,
+                _csrf: csrfToken
             }),
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-        });
+        }); 
     } catch (error) {
         alert("Something went wrong!");
         return;
@@ -34,16 +34,21 @@ async function updateCartItem(event) {
     }
 
     const responseData = await response.json();
+    console.log(responseData);
 
-    if(responseData.updatedCartItem.updatedItemPrice === 0) {
+    if(responseData.updatedCartData.updatedItemPrice === 0) {
         form.parentElement.parentElement.remove();
     } else {
         const cartItemTotalPriceElement = form.parentElement.querySelector(".cart-item-price");
-        cartItemTotalPriceElement.textContent = responseData.updatedCartItem.updatedItemPrice.toFixed(2);
+        cartItemTotalPriceElement.textContent = responseData.updatedCartData.updatedItemPrice.toFixed(2);
     }
 
-    cartTotalPriceElement.textContent = responseData.updatedCartItem.newTotalPrice.toFixed(2);
-    cartBadgeElement.textContent = responseData.updatedCartItem.newTotalQuantity;
+    cartTotalPriceElement.textContent = responseData.updatedCartData.newTotalPrice.toFixed(2);
+
+    for (const cartBadgeElement of cartBadgeElements) {
+        cartBadgeElement.textContent = responseData.updatedCartData.newTotalQuantity;
+    }
+    
 }
 
 for (const formElement of cartItemUpdateFormElements) {

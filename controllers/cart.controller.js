@@ -1,6 +1,6 @@
 const Product = require('../models/product.model');
 
-function getCart(req, res) {
+async function getCart(req, res) {
     res.render('client/cart/cart');
 }
 
@@ -30,13 +30,14 @@ async function addCartItem(req, res, next) {
 function updateCartItem(req, res) {
     const cart = res.locals.cart;
 
-    const updatedItemData = cart.updateCartItem(req.body.productId, req.body.quantity);
+    const updatedItemData = cart.updateItem(req.body.productId, +req.body.quantity);
 
-    req.session.cart = cart;
+    req.session.cart = cart; // saving to the session
 
+    // we are expeting a ajax request thats why we are sending json response    
     res.json({
         message: "Item updated!",
-        updatedCartItem: {
+        updatedCartData: {
             newTotalQuantity: cart.totalQuantity,
             newTotalPrice: cart.totalPrice,
             updatedItemPrice: updatedItemData.updatedItemPrice 
